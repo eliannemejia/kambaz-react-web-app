@@ -3,10 +3,8 @@ export default function Lab1() {
         <div id="wd-lab1">
             <h1>Lab 1</h1>
             <h2>Chapter 1 - Building React User Interfaces with HTML</h2>
-            <h3>1.2 Introduction to HTML</h3>
             <h3>HTML Examples</h3>
             <div id="wd-h-tag">
-                <h3>1.2.1 Structuring Web Content with the HTML Heading and Div Tags</h3>
                 <h4>Heading Tags</h4>
                 Text documents are often broken up into several sections and subsections.
                 Each section is usually prefaced with a short title or heading that attempts
@@ -20,7 +18,6 @@ export default function Lab1() {
             </div>
 
             <div id="wd-p-tag">
-                <h3>1.2.2 Formatting Text with the HTML Paragraph Tag</h3>
                 <h4>Paragraph Tag</h4>
                 <p id="wd-p-1">
                     This is a paragraph. We often separate a long set of sentences with vertical spaces to make the
@@ -45,7 +42,6 @@ export default function Lab1() {
             </div>
 
             <div id="wd-lists">
-                <h3>1.2.3 Listing Content with the HTML Ordered List Tag</h3>
                 <h4>List Tags</h4>
                 <h5>Ordered List Tag</h5>
                 How to make pancakes:
@@ -70,7 +66,6 @@ export default function Lab1() {
                     <li>Add toppings of your choice and enjoy!</li>
 
                 </ol>
-                <h3>1.2.4 Listing Content In No Particular Order with the HTML Unordered List Tag</h3>
                 <h5>Unordered List Tag</h5>
                 My favorite books (in no particular order)
                 <ul id="wd-my-books">
@@ -89,7 +84,6 @@ export default function Lab1() {
 
             </div>
 
-            <h3>1.2.5 Tabulating Data with the HTML Table Tags</h3>
             <div id="wd-tables">
                 <h4>Table Tag</h4>
                 <table border={1} width="100%">
@@ -172,7 +166,6 @@ export default function Lab1() {
                 </table>
             </div>
 
-            <h3>1.2.6 Image Tag</h3>
             <div id="wd-images">
                 <h4>Image tag</h4>
                 Loading an image from the internet: <br />
@@ -181,12 +174,10 @@ export default function Lab1() {
                 <br />
                 Loading a local image:
                 <br />
-                <img id="wd-teslabot" src="images/teslabot.jpg" height="200px" />
+                <img id="wd-teslabot" src="images/teslabot.jpeg" height="200px" />
             </div>
 
-            <h3>1.2.7 Creating Web Forms</h3>
             <div id="wd-forms">
-                <h4>1.2.7.1 Creating Text Input Fields</h4>
                 <h4>Form Elements</h4>
                 <form id="wd-text-fields">
                     <h5>Text Fields</h5>
@@ -229,7 +220,6 @@ export default function Lab1() {
                         id="wd-text-fields-dob" /><br />
                 </form>
 
-                <h4>1.2.7.2 Creating Multi-Line Input Fields with Textarea</h4>
                 <h5>Text boxes</h5>
                 <label>Biography:</label><br />
                 <textarea id="wd-textarea" cols={30} rows={10}>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -279,7 +269,6 @@ export default function Lab1() {
                 <input type="checkbox" name="check-genre" id="wd-chkbox-fantasy" />
                 <label htmlFor="wd-chkbox-fantasy">Fantasy</label>
 
-                <h3>1.2.7.6 Creating Dropdown Menus with HTML Select and Option</h3>
                 <h4 id="wd-dropdowns">Dropdowns</h4>
 
                 <h5>Select one</h5>
@@ -303,7 +292,6 @@ export default function Lab1() {
             </div>
 
             <div id="wd-navigation">
-                <h3>1.2.8 Implementing Navigation with the HTML Anchor Tag</h3>
                 <h4>Anchor tag</h4>
                 Please
                 <a href="https://www.lipsum.com" id="wd-lipsum"> click here </a>
