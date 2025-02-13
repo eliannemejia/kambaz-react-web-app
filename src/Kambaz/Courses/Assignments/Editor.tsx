@@ -2,7 +2,6 @@ import { Button, Col, Container, Form, FormControl, InputGroup, Row } from "reac
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { useParams } from "react-router";
 import * as db from "../../Database";
-import { TbRuler, TbRuler2 } from "react-icons/tb";
 
 export default function AssignmentEditor() {
     const { aid } = useParams();

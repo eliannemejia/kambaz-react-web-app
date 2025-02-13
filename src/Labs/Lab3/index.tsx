@@ -1,4 +1,3 @@
-import { Navigate, Route, Routes } from "react-router-dom";
 import BooleanVariables from "./BooleanVariables";
 import ConditionalOutputIfElse from "./ConditionalOutputIfElse";
 import ConditionalOutputInline from "./ConditionalOutputInline";
@@ -30,8 +29,8 @@ import Styles from "./Styles";
 import Add from "./Add";
 import Square from "./Square";
 import Highlight from "./Highlight";
-import AddPathParameters from "./AddPathParameters";
 import PathParameters from "./PathParameters";
+
 export default function Lab3() {
   console.log('Hello World!');
   return (
