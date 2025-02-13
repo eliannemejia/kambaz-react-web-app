@@ -1,4 +1,4 @@
-import KambazDashboard from "./Dashboard";
+import KambazDashboard from "../Dashboard";
 
 export default function Dashboard() {
   return (
