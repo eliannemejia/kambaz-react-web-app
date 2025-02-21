@@ -34,11 +34,11 @@ body * {
   --bs-list-group-border-color: gray;
 }
 
-.wd-lesson {
+.green-left-border {
   border-left: 3px solid green !important;
 }
 
-.assignment-icon {
+.green-icon {
   color: green;
 }
 

@@ -7,6 +7,7 @@ import AssignmentEditor from "./Assignments/Editor";
 import { FaAlignJustify } from "react-icons/fa";
 import PeopleTable from "./People/Table";
 import { courses } from "../Database";
+import Quizzes from "./Quizzes";
 
 export default function Courses() {
     const { cid } = useParams();
@@ -34,7 +35,7 @@ export default function Courses() {
                         <Route path="Zoom" element={<h2>Zoom</h2>} />
                         <Route path="Assignments" element={<Assignments />} />
                         <Route path="Assignments/:aid" element={<AssignmentEditor />} />
-                        <Route path="Quizzes" element={<h2>Quizzes</h2>} />
+                        <Route path="Quizzes" element={<Quizzes />} />
                         <Route path="Grades" element={<h2>Grades</h2>} />
                         <Route path="People" element={<PeopleTable />} />
                     </Routes>

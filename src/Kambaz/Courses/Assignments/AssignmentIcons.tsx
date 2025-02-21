@@ -5,7 +5,7 @@ export default function AssignmentIcons() {
     return (
         <div className="float-end">
             <BsGripVertical className="me-2 fs-3" />
-            <LuNotebookPen className="assignment-icon" />
+            <LuNotebookPen className="green-icon" />
         </div>
     );
 }
