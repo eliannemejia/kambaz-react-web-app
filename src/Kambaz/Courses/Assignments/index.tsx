@@ -6,11 +6,14 @@ import AssignmentIcons from "./AssignmentIcons";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { BsPlus } from "react-icons/bs";
 import { useParams } from "react-router";
-import * as db from "../../Database";
+import { useSelector } from "react-redux";
+import { deleteAssignment } from "./reducer";
+import { useDispatch } from "react-redux";
 
 export default function Assignments() {
     const { cid } = useParams();
-    const assignments = db.assignments;
+    const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+    const dispatch = useDispatch();
 
     return (
         <Container id="wd-assignments">
@@ -30,18 +33,21 @@ export default function Assignments() {
                                 <ListGroup.Item className="wd-assignment-list-item p-3 ps-1 d-flex align-items-center">
                                     <AssignmentIcons />
                                     <div className="float-end wd-margin-left" >
-                                        <Link to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id} `}
-                                            className="list-group-item border border-0">
+                                        <Link to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
+                                            className="list-group-item border border-0"
+                                            onClick={() => console.log()}>
                                             {assignment.title} <br />
                                             <span style={{ fontSize: "16px" }}>Multiple Modules | <b>Not available until</b> May 6 at 12:00am | <b>Due</b> May 13 at 11:59pm | 100 pts</span>
                                         </Link>
                                     </div>
                                     <div className="ms-auto">
-                                        <AssignmentControlButtons />
+                                        <AssignmentControlButtons assignmentId={assignment._id}
+                                            deleteAssignment={(assignmentId) => {
+                                                dispatch(deleteAssignment(assignmentId));
+                                            }} />
                                     </div>
                                 </ListGroup.Item >))}
                     </ListGroup >
-                    
                 </ListGroup.Item>
             </ListGroup>
         </Container>

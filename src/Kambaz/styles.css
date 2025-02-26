@@ -44,10 +44,13 @@ body * {
 
 .wd-margin-left {
   margin-left: 10px;
-}
+} 
 
 .wd-margin-bottom {
   margin-bottom: 20px;
+}
+.wd-margin-top {
+  margin-top: 20px;
 }
 
 .wd-padded-left {
@@ -58,6 +61,10 @@ body * {
   padding-top: 10px;
 }
 
+.wd-margin-right {
+  margin-right: 5px;
+}
+
 .wd-thin-gray-borders {
   border-width: 1.5px;
   border-style: solid;
@@ -65,8 +72,19 @@ body * {
   border-radius: 10px;
 }
 
+.wd-thin-gray-borders-sharp {
+  border-width: 1.5px;
+  border-style: solid;
+  border-color: rgb(222, 223, 224);
+  border-radius: 0px;
+}
+
 .wd-padding-all-around {
   padding-left: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.light-gray-font {
+  color: lightgray
 }
