@@ -4,8 +4,7 @@ import { Link, useLocation, useParams } from "react-router";
 import BlankAssignmentScreen from "./BlankAssignmentScreen";
 import { useEffect, useState } from "react";
 import { addAssignment, updateAssignment } from "./reducer";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function AssignmentEditor() {
 
