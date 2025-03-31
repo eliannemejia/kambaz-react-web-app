@@ -1,22 +1,26 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import * as db from "./Database";
-
 
 export default function Dashboard({ courses, course, setCourse, addNewCourse,
-  deleteCourse, updateCourse }: {
+  deleteCourse, updateCourse, showAllCourses, isEnrolled, enroll, unenroll }: {
     courses: any[]; course: any; setCourse: (course: any) => void;
     addNewCourse: () => void; deleteCourse: (course: any) => void;
     updateCourse: () => void;
+    showAllCourses: () => void;
+    isEnrolled: (course: any) => boolean;
+    enroll: (course: any) => void;
+    unenroll: (courseId: string) => void;
   }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const { enrollments } = db;
-  return (
 
+
+  return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
       <h5>New Course
+        <button className="btn btn-primary float-end ms-2 me-2"
+          id="wd-enroll" onClick={showAllCourses}> Enroll </button>
         <button className="btn btn-primary float-end"
           id="wd-add-new-course-click"
           onClick={addNewCourse} > Add </button>
@@ -34,12 +38,6 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
           {courses
-            .filter((course) =>
-              enrollments.some(
-                (enrollment) =>
-                  enrollment.user === currentUser._id &&
-                  enrollment.course === course._id
-              ))
             .map((course) => (
               <Col className="wd-dashboard-course" style={{ width: "300px" }}>
                 <Card>
@@ -67,6 +65,22 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
                         className="btn btn-warning me-2 float-end" >
                         Edit
                       </button>
+                      {isEnrolled(course._id) ? (
+                        <Button variant="danger" onClick={(event) => {
+                          event.preventDefault();
+                          unenroll(course._id);
+                          console.log("UNENROLLING FROM COURSE: ", course._id);
+                        }}>
+                          Unenroll
+                        </Button>
+                      ) : (
+                        <Button variant="success" onClick={(event) => {
+                          event.preventDefault();
+                          enroll(course)
+                        }}>
+                          Enroll
+                        </Button>
+                      )}
                     </Card.Body>
                   </Link>
                 </Card>

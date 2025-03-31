@@ -5,7 +5,8 @@ import BlankAssignmentScreen from "./BlankAssignmentScreen";
 import { useEffect, useState } from "react";
 import { addAssignment, updateAssignment } from "./reducer";
 import { useDispatch, useSelector } from "react-redux";
-
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
 export default function AssignmentEditor() {
 
     const { cid, aid } = useParams();
@@ -20,6 +21,25 @@ export default function AssignmentEditor() {
     const [availableFrom, setAvailableFrom] = useState(assignment?.availableFrom || "")
     const [availableUntil, setAvailableUntil] = useState(assignment?.availableUntil || "")
     const isNewAssignment = pathname.split("/")[5] === "new";
+    const createAssignmentForCourse = async () => {
+        if (!cid) return;
+        const newAssignment = {
+            title: assignmentTitle,
+            description: assignmentDescription,
+            dueDate: dueDate,
+            points: points,
+            availableFrom: availableFrom,
+            availableUntil: availableUntil,
+            assignTo: "Everyone",
+            assignmentGroup: "ASSIGNMENTS",
+            displayGradeAs: "PERCENTAGE",
+            submissionType: "ONLINE",
+            allowedSubmissions: [],
+            course: cid, };
+        const assignment = await coursesClient.createAssignmentForCourse(cid, newAssignment);
+        dispatch(addAssignment(assignment));
+    };
+
     const dispatch = useDispatch();
     console.log("Cid:", cid);
     console.log("Aid:", aid);
@@ -38,12 +58,7 @@ export default function AssignmentEditor() {
                 setAvailableFrom={setAvailableFrom} availableUntil={availableUntil}
                 setAvailableUntil={setAvailableUntil}
                 assignmentDescription={assignmentDescription} setAssignmentDescription={setAssignmentDescription}
-                addAssignment={() => {
-                    dispatch(addAssignment({
-                        title: assignmentTitle, course: cid, description: assignmentDescription, dueDate: dueDate, points: points,
-                        availableFrom: availableFrom, availableUntil: availableUntil
-                    }));
-                }} /> : <div key={assignment._id}>
+                addAssignment={ createAssignmentForCourse } /> : <div key={assignment._id}>
                 <Form.Control className="wd-margin-bottom" placeholder="Assignment Name" id="wd-name" defaultValue={assignment.title}
                     onChange={(e) => setAssignmentTitle(e.target.value)} />
                 <FormControl as="textarea" className="wd-margin-bottom" id="wd-description" rows={5}
