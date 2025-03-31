@@ -1,6 +1,5 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 export default function Dashboard({ courses, course, setCourse, addNewCourse,
   deleteCourse, updateCourse, showAllCourses, isEnrolled, enroll, unenroll }: {
@@ -12,8 +11,7 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
     enroll: (course: any) => void;
     unenroll: (courseId: string) => void;
   }) {
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
-
+  
 
   return (
     <div id="wd-dashboard">

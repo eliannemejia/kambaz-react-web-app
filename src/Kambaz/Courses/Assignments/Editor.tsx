@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { addAssignment, updateAssignment } from "./reducer";
 import { useDispatch, useSelector } from "react-redux";
 import * as coursesClient from "../client";
-import * as assignmentsClient from "./client";
 export default function AssignmentEditor() {
 
     const { cid, aid } = useParams();

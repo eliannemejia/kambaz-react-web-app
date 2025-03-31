@@ -34,7 +34,6 @@ export default function Kambaz() {
   }
 
   const unenroll = async (courseId: string) => {
-    const status = await userClient.unenrollFromCourse(courseId);
     setEnrolledCourses(enrolledCourses.filter(c => c._id !== course._id))
     console.log("UNENROLLING FROM COURSE: ", courseId);
     if (showAllCourses) {
@@ -48,7 +47,6 @@ export default function Kambaz() {
   }
 
   const enroll = async (course: any) => {
-    const status = await userClient.enrollInCourse(course._id);
     setEnrolledCourses([...enrolledCourses, course]);
     if (showAllCourses) {
       const courses = await courseClient.fetchAllCourses();
@@ -87,7 +85,6 @@ export default function Kambaz() {
   };
 
   const deleteCourse = async (courseId: string) => {
-    const status = await courseClient.deleteCourse(courseId);
     setCourses(courses.filter((course) => course._id !== courseId));
   };
 
