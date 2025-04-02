@@ -45,7 +45,7 @@ export const enrollInCourse = async (course: any) => {
 
 
 export const unenrollFromCourse = async (course: any) => {
-    console.log("COURSE ID In CLIENT.TS: ", course._id);
+    console.log("COURSE ID IN CLIENT.TS: ", course._id);
     const { data } = await axiosWithCredentials.put(`${USERS_API}/current/courses/unenroll/${course._id}`);
     return data
 };
