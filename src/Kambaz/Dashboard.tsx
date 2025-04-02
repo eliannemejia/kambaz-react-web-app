@@ -66,7 +66,7 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
                       {isEnrolled(course._id) ? (
                         <Button variant="danger" onClick={(event) => {
                           event.preventDefault();
-                          unenroll(course._id);
+                          unenroll(course);
                           console.log("UNENROLLING FROM COURSE: ", course._id);
                         }}>
                           Unenroll
@@ -74,7 +74,7 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
                       ) : (
                         <Button variant="success" onClick={(event) => {
                           event.preventDefault();
-                          enroll(course)
+                          enroll(course);
                         }}>
                           Enroll
                         </Button>

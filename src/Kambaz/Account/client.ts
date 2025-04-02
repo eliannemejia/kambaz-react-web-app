@@ -38,13 +38,14 @@ export const createCourse = async (course: any) => {
     return data;
 };
 
-export const enrollInCourse = async (courseId: string) => {
-    const { data } = await axiosWithCredentials.put(`${USERS_API}/current/courses/enroll/${courseId}`);
+export const enrollInCourse = async (course: any) => {
+    const { data } = await axiosWithCredentials.put(`${USERS_API}/current/courses/enroll/${course._id}`);
     return data;
 };
 
 
-export const unenrollFromCourse = async (courseId: string) => {
-    const { data } = await axiosWithCredentials.delete(`${USERS_API}/current/courses/unenroll/${courseId}`);
+export const unenrollFromCourse = async (course: any) => {
+    console.log("COURSE ID In CLIENT.TS: ", course._id);
+    const { data } = await axiosWithCredentials.put(`${USERS_API}/current/courses/unenroll/${course._id}`);
     return data
 };
