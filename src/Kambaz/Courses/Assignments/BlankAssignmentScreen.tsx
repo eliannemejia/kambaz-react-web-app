@@ -21,7 +21,7 @@ export default function BlankAssignmentScreen({ assignmentTitle, setAssignmentTi
         setAvailableUntil: (availableUntil: string) => void;
     }) {
     const { cid } = useParams();
-  
+
     return (
         <div>
             <Form.Control className="wd-margin-bottom" placeholder="Assignment Name" id="wd-name"
@@ -82,8 +82,8 @@ export default function BlankAssignmentScreen({ assignmentTitle, setAssignmentTi
                     <Form.Control id="wd-assign-to" value="Everyone" className="mb-3" />
                     <Form.Label htmlFor="wd-due-date">Due</Form.Label>
                     <InputGroup className="me-1 float-left mb-3">
-                        <Form.Control type="date" id="wd-due-date" 
-                        defaultValue={dueDate} onChange={(e) => setDueDate(e.target.value)}/>
+                        <Form.Control type="date" id="wd-due-date"
+                            defaultValue={dueDate} onChange={(e) => setDueDate(e.target.value)} />
                         <InputGroup.Text>
                             <FaRegCalendarAlt />
                         </InputGroup.Text>
@@ -92,8 +92,8 @@ export default function BlankAssignmentScreen({ assignmentTitle, setAssignmentTi
                         <Col sm={6}>
                             <Form.Label htmlFor="wd-available-from">Available From</Form.Label>
                             <InputGroup className="me-1 float-left">
-                                <Form.Control type="date" id="wd-available-from" 
-                                defaultValue={availableFrom} onChange={(e) => setAvailableFrom(e.target.value)}/>
+                                <Form.Control type="date" id="wd-available-from"
+                                    defaultValue={availableFrom} onChange={(e) => setAvailableFrom(e.target.value)} />
                                 <InputGroup.Text>
                                     <FaRegCalendarAlt />
                                 </InputGroup.Text>
@@ -102,8 +102,8 @@ export default function BlankAssignmentScreen({ assignmentTitle, setAssignmentTi
                         <Col sm={6}>
                             <Form.Label htmlFor="wd-available-until">Available Until</Form.Label>
                             <InputGroup className="me-1 float-left">
-                                <Form.Control type="date" id="wd-available-until" 
-                                defaultValue={availableUntil} onChange={(e) => setAvailableUntil(e.target.value)}/>
+                                <Form.Control type="date" id="wd-available-until"
+                                    defaultValue={availableUntil} onChange={(e) => setAvailableUntil(e.target.value)} />
                                 <InputGroup.Text>
                                     <FaRegCalendarAlt />
                                 </InputGroup.Text>
@@ -114,7 +114,10 @@ export default function BlankAssignmentScreen({ assignmentTitle, setAssignmentTi
             </Form.Group>
             <hr />
             <div className="d-flex justify-content-end">
-                <Button variant="secondary" className="wd-margin-right">Cancel</Button>
+                <Link to={`/Kambaz/Courses/${cid}/Assignments`}>
+                    <Button variant="secondary" className="wd-margin-right">
+                        Cancel</Button>
+                </Link>
                 <Link to={`/Kambaz/Courses/${cid}/Assignments`}>
                     <Button variant="danger" onClick={addAssignment}>Save</Button>
                 </Link>

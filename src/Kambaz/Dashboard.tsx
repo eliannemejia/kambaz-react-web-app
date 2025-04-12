@@ -2,20 +2,26 @@ import { Button, Card, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function Dashboard({ courses, course, setCourse, addNewCourse,
-  deleteCourse, updateCourse, showAllCourses, isEnrolled, enroll, unenroll }: {
+  deleteCourse, updateCourse, showAllCourses, isEnrolled,
+  updateEnrollment, enrolling, setEnrolling }: {
     courses: any[]; course: any; setCourse: (course: any) => void;
     addNewCourse: () => void; deleteCourse: (course: any) => void;
     updateCourse: () => void;
     showAllCourses: () => void;
     isEnrolled: (course: any) => boolean;
-    enroll: (course: any) => void;
-    unenroll: (courseId: string) => void;
+    enrolling: boolean;
+    setEnrolling: (enrolling: boolean) => void;
+    updateEnrollment: (courseId: string, enrolled: boolean) => void
   }) {
-  
+
 
   return (
     <div id="wd-dashboard">
-      <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
+      <h1 id="wd-dashboard-title">
+        Dashboard
+        <button onClick={() => setEnrolling(!enrolling)} className="float-end btn btn-primary" >
+          {enrolling ? "My Courses" : "All Courses"}
+        </button></h1> <hr />
       <h5>New Course
         <button className="btn btn-primary float-end ms-2 me-2"
           id="wd-enroll" onClick={showAllCourses}> Enroll </button>
@@ -44,6 +50,15 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
                     <Card.Img src={course.image} variant="top" width="100%" height={160} />
                     <Card.Body className="card-body">
                       <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                        {enrolling && (
+                          <button onClick={(event) => {
+                            event.preventDefault();
+                            updateEnrollment(course._id, !course.enrolled);
+                          }}
+                            className={`btn ${course.enrolled ? "btn-danger" : "btn-success"} float-end`} >
+                            {course.enrolled ? "Unenroll" : "Enroll"}
+                          </button>
+                        )}
                         {course.name} </Card.Title>
                       <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
                         {course.description} </Card.Text>
@@ -63,22 +78,6 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
                         className="btn btn-warning me-2 float-end" >
                         Edit
                       </button>
-                      {isEnrolled(course._id) ? (
-                        <Button variant="danger" onClick={(event) => {
-                          event.preventDefault();
-                          unenroll(course);
-                          console.log("UNENROLLING FROM COURSE: ", course._id);
-                        }}>
-                          Unenroll
-                        </Button>
-                      ) : (
-                        <Button variant="success" onClick={(event) => {
-                          event.preventDefault();
-                          enroll(course);
-                        }}>
-                          Enroll
-                        </Button>
-                      )}
                     </Card.Body>
                   </Link>
                 </Card>

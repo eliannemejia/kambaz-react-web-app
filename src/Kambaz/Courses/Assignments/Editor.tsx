@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 import { addAssignment, updateAssignment } from "./reducer";
 import { useDispatch, useSelector } from "react-redux";
 import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
 export default function AssignmentEditor() {
-
+    const dispatch = useDispatch();
     const { cid, aid } = useParams();
     const { assignments } = useSelector((state: any) => state.assignmentsReducer);
     const assignment = assignments.find((a: any) => a._id === aid);
@@ -34,12 +35,35 @@ export default function AssignmentEditor() {
             displayGradeAs: "PERCENTAGE",
             submissionType: "ONLINE",
             allowedSubmissions: [],
-            course: cid, };
+            course: cid,
+        };
         const assignment = await coursesClient.createAssignmentForCourse(cid, newAssignment);
         dispatch(addAssignment(assignment));
     };
 
-    const dispatch = useDispatch();
+    const handleSave = async () => {
+        if (!assignment) return;
+
+        const updatedAssignment = {
+            ...assignment,
+            title: assignmentTitle,
+            description: assignmentDescription,
+            dueDate,
+            points,
+            availableFrom,
+            availableUntil,
+            assignTo: assignment.assignTo,
+            assignmentGroup: assignment.assignmentGroup,
+            displayGradeAs: assignment.displayGradeAs,
+            submissionType: assignment.submissionType,
+            allowedSubmissions: assignment.allowedSubmissions,
+        };
+
+        const saved = await assignmentsClient.updateAssignment(updatedAssignment);
+
+        dispatch(updateAssignment(saved));
+    };
+
     console.log("Cid:", cid);
     console.log("Aid:", aid);
     useEffect(() => {
@@ -57,7 +81,7 @@ export default function AssignmentEditor() {
                 setAvailableFrom={setAvailableFrom} availableUntil={availableUntil}
                 setAvailableUntil={setAvailableUntil}
                 assignmentDescription={assignmentDescription} setAssignmentDescription={setAssignmentDescription}
-                addAssignment={ createAssignmentForCourse } /> : <div key={assignment._id}>
+                addAssignment={createAssignmentForCourse} /> : <div key={assignment._id}>
                 <Form.Control className="wd-margin-bottom" placeholder="Assignment Name" id="wd-name" defaultValue={assignment.title}
                     onChange={(e) => setAssignmentTitle(e.target.value)} />
                 <FormControl as="textarea" className="wd-margin-bottom" id="wd-description" rows={5}
@@ -155,12 +179,7 @@ export default function AssignmentEditor() {
                         <Button variant="secondary" className="wd-margin-right">Cancel</Button>
                     </Link>
                     <Link to={`/Kambaz/Courses/${cid}/Assignments`}>
-                        <Button variant="danger" onClick={() =>
-                            dispatch(updateAssignment({
-                                ...assignment, title: assignmentTitle,
-                                description: assignmentDescription, dueDate: dueDate, points: points,
-                                availableFrom: availableFrom, availableUntil: availableUntil
-                            }))}>Save</Button>
+                        <Button variant="danger" onClick={handleSave}>Save</Button>
                     </Link>
 
                 </div>

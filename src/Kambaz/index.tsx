@@ -16,56 +16,90 @@ export default function Kambaz() {
   const [enrolledCourses, setEnrolledCourses] = useState<any[]>([]);
   const [showAllCourses, setShowAllCourses] = useState(false);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const fetchCourses = async () => {
+
+  const [enrolling, setEnrolling] = useState<boolean>(false);
+  const findCoursesForUser = async () => {
     try {
-      const courses = await userClient.findMyCourses();
+      const courses = await userClient.findCoursesForUser(currentUser._id);
       setCourses(courses);
-      setEnrolledCourses(courses);
     } catch (error) {
       console.error(error);
     }
   };
-  useEffect(() => {
-    fetchCourses();
-  }, [currentUser]);
+  const fetchCourses = async () => {
+    try {
+      const allCourses = await courseClient.fetchAllCourses();
+      const enrolledCourses = await userClient.findCoursesForUser(
+        currentUser._id
+      );
+      const courses = allCourses.map((course: any) => {
+        if (enrolledCourses.find((c: any) => c._id === course._id)) {
+          return { ...course, enrolled: true };
+        } else {
+          return course;
+        }
+      });
+      setCourses(courses);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const isEnrolled = (courseId: string) => {
     return enrolledCourses.some((course) => course._id === courseId);
   }
 
-  const unenroll = async (course: any) => {
-    const status = await userClient.unenrollFromCourse(course);
-    if (status) {
-      
-    }
-    setEnrolledCourses(enrolledCourses.filter(c => c._id !== course._id));
-    if (showAllCourses) {
-      const courses = await courseClient.fetchAllCourses();
-      setCourses(courses);
-    } 
-    else {
-      const courses =  await userClient.findMyCourses();
-      setCourses(courses);
-    }
-  }
 
-  const enroll = async (course: any) => {
-    console.log(course);
-    console.log(course._id);
-    const status = await userClient.enrollInCourse(course);
-    if (status) {
-      
+  // const unenroll = async (course: any) => {
+  //   const status = await userClient.unenrollFromCourse(course);
+  //   if (status) {
+
+  //   }
+  //   setEnrolledCourses(enrolledCourses.filter(c => c._id !== course._id));
+  //   if (showAllCourses) {
+  //     const courses = await courseClient.fetchAllCourses();
+  //     setCourses(courses);
+  //   }
+  //   else {
+  //     const courses = await userClient.findMyCourses();
+  //     setCourses(courses);
+  //   }
+  // }
+
+  // const enroll = async (course: any) => {
+  //   console.log(course);
+  //   console.log(course._id);
+  //   const status = await userClient.enrollInCourse(course);
+  //   if (status) {
+
+  //   }
+  //   setEnrolledCourses([...enrolledCourses, course]);
+  //   if (showAllCourses) {
+  //     const courses = await courseClient.fetchAllCourses();
+  //     setCourses(courses);
+  //   }
+  //   else {
+  //     const courses = await userClient.findMyCourses();
+  //     setCourses(courses);
+  //   }
+  // }
+  
+  const updateEnrollment = async (courseId: string, enrolled: boolean) => {
+    if (enrolled) {
+      await userClient.enrollIntoCourse(currentUser._id, courseId);
+    } else {
+      await userClient.unenrollFromCourse(currentUser._id, courseId);
     }
-    setEnrolledCourses([...enrolledCourses, course]);
-    if (showAllCourses) {
-      const courses = await courseClient.fetchAllCourses();
-      setCourses(courses);
-    } 
-    else {
-      const courses =  await userClient.findMyCourses();
-      setCourses(courses);
-    }
-  }
+    setCourses(
+      courses.map((course) => {
+        if (course._id === courseId) {
+          return { ...course, enrolled: enrolled };
+        } else {
+          return course;
+        }
+      })
+    );
+  };
 
   const handleToggleCourses = async () => {
     setShowAllCourses(prevState => !prevState);
@@ -81,19 +115,21 @@ export default function Kambaz() {
     }
   };
 
-  
+
   const [course, setCourse] = useState<any>({
     _id: "1234", name: "New Course", number: "New Number",
     startDate: "2023-09-10", endDate: "2023-12-15", description: "New Description",
   });
 
   const addNewCourse = async () => {
-    const newCourse = await userClient.createCourse(course);
+    //const newCourse = await userClient.createCourse(course);
+    const newCourse = await courseClient.createCourse(course);
     setCourses([...courses, newCourse]);
     setEnrolledCourses([...enrolledCourses, newCourse]);
   };
 
   const deleteCourse = async (courseId: string) => {
+    const status = await courseClient.deleteCourse(courseId);
     setCourses(courses.filter((course) => course._id !== courseId));
   };
 
@@ -109,6 +145,49 @@ export default function Kambaz() {
       })
     );
   };
+
+  useEffect(() => {
+    if (enrolling) {
+      fetchCourses();
+    } else {
+      findCoursesForUser();
+    }
+  }, [currentUser, enrolling]);
+
+
+  // const unenroll = async (course: any) => {
+  //   const status = await userClient.unenrollFromCourse(course);
+  //   if (status) {
+
+  //   }
+  //   setEnrolledCourses(enrolledCourses.filter(c => c._id !== course._id));
+  //   if (showAllCourses) {
+  //     const courses = await courseClient.fetchAllCourses();
+  //     setCourses(courses);
+  //   }
+  //   else {
+  //     const courses = await userClient.findMyCourses();
+  //     setCourses(courses);
+  //   }
+  // }
+
+  // const enroll = async (course: any) => {
+  //   console.log(course);
+  //   console.log(course._id);
+  //   const status = await userClient.enrollInCourse(course);
+  //   if (status) {
+
+  //   }
+  //   setEnrolledCourses([...enrolledCourses, course]);
+  //   if (showAllCourses) {
+  //     const courses = await courseClient.fetchAllCourses();
+  //     setCourses(courses);
+  //   }
+  //   else {
+  //     const courses = await userClient.findMyCourses();
+  //     setCourses(courses);
+  //   }
+  // }
 
   return (
     <Session>
@@ -127,8 +206,9 @@ export default function Kambaz() {
               updateCourse={updateCourse}
               showAllCourses={handleToggleCourses}
               isEnrolled={isEnrolled}
-              enroll={enroll}
-              unenroll={unenroll} /> </ProtectedRoute>} />
+              updateEnrollment={updateEnrollment}
+              enrolling={enrolling}
+              setEnrolling={setEnrolling} /> </ProtectedRoute>} />
             <Route path="/Courses/:cid/*" element={<ProtectedRoute><Courses courses={courses} /> </ProtectedRoute>} />
             <Route path="/Calendar" element={<h1>Calendar</h1>} />
             <Route path="/Inbox" element={<h1>Inbox</h1>} />

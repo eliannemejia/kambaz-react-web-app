@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import AssignmentIcons from "./AssignmentIcons";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { BsPlus } from "react-icons/bs";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { deleteAssignment, setAssignments } from "./reducer";
 import { useDispatch } from "react-redux";
@@ -15,19 +15,21 @@ import * as assignmentsClient from "./client";
 
 export default function Assignments() {
     const { cid } = useParams();
+    const location = useLocation();
     const { assignments } = useSelector((state: any) => state.assignmentsReducer);
     const dispatch = useDispatch();
     const fetchAssignments = async () => {
         const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
         dispatch(setAssignments(assignments));
     };
-    useEffect(() => {
-        fetchAssignments();
-    }, []);
     const removeAssignment = async (assignmentId: string) => {
         await assignmentsClient.deleteAssignment(assignmentId);
         dispatch(deleteAssignment(assignmentId));
     };
+    useEffect(() => {
+        fetchAssignments();
+    }, [cid, location]);
+   
 
 
     return (
